@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synthgen"
+dynamic = ["version"]
+description = "LLM-based synthetic training data generation from raw text corpora: classification, regression, NER, relations, extractive QA, extractive summarization, tabular data"
+readme = "README.en.md"
+requires-python = ">=3.11"
+authors = [{ name = "Maksim Konyaev", email = "konyaevmaksim88@gmail.com" }]
+keywords = ["synthetic data", "llm", "data generation", "ner", "relation extraction", "question answering", "distillation", "lora"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Natural Language :: Russian",
+    "Natural Language :: English",
+    "Typing :: Typed",
+]
+dependencies = [
+    "openai>=1.40",
+    "pydantic>=2.6",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=16",          # первая версия pyarrow, совместимая с NumPy 2
+    "python-dotenv>=1.0",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+hf = ["datasets>=2.18"]
+notebook = ["ipykernel>=6.29", "ipywidgets>=8"]
+dev = ["pytest>=8", "build>=1.2"]
+all = ["synthgen[hf,notebook,dev]"]
+
+[tool.setuptools.dynamic]
+version = { attr = "synthgen.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+synthgen = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
